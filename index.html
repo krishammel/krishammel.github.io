@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>GTHA Bike Map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='mapbox-gl.js'></script>
+    <link href='mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%;touch-action: none; }
+    </style>
+</head>
+<body>
+<style>
+.collapsible{
+    background-color:#fff;
+    color:#000;
+    padding: 4px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 10px;
+}
+.active, .collapsible:hover{
+    background-color:#ccc;
+}
+.content{
+    padding: 0 4px;
+    display: none;
+    overflow: hidden;
+    background-color: #fff;
+    text-align: left;
+    font-size: 10px;
+    z-index:1;
+}
+</style> 
+        <div id='map'></div>
+        <div style="position: absolute; bottom: 30px; right: 10px; z-index:1; background-color:white; display:block">
+        <button class='collapsible'>Legend</button>
+        <div class="content">
+        <table>
+            <tr>
+              <td><svg height="5" width=30><line x1="0" y1="0" x2="30" y2="0" style="stroke:rgb(255,0,0);stroke-width:4" /></svg></td>
+              <td>Bike Lane</td> 
+            </tr>
+            <tr>
+                <td><svg height="5" width=30><line x1="0" y1="0" x2="30" y2="0" style="stroke:rgb(238, 93, 203);stroke-width:4;" /></svg></td>
+                <td>Contra Flow Bike Lane</td> 
+            </tr>
+            <tr>
+                <td><svg height="5" width=30><line x1="0" y1="0" x2="30" y2="0" style="stroke:rgb(255,0,0);stroke-width:4;stroke-dasharray:4,4" /></svg></td>
+                <td>Sharrows/Shared</td> 
+              </tr>
+            
+            <tr>
+              <td><svg height="5" width=30><line x1="0" y1="0" x2="30" y2="0" style="stroke:rgb(12, 77, 5);stroke-width:4;" /></svg></td>
+              <td>Cycle Track / Path</td> 
+            </tr>
+            <tr>
+                <td><svg height="5" width=30><line x1="0" y1="0" x2="30" y2="0" style="stroke:rgb(12, 77, 5);stroke-width:4;stroke-dasharray:4,4" /></svg></td>
+                <td>Cycle Track / Path Unpaved</td> 
+              </tr>
+              <tr>
+                <td><svg height="5" width=30><line x1="0" y1="0" x2="30" y2="0" style="stroke:rgb(169, 25, 171);stroke-width:4;" /></svg></td>
+                <td>Bike Route</td> 
+              </tr>
+              
+          </table>
+        </div> 
+    </div>
+        
+    <script>
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'krisbasic.json',
+            center: [-79.651855, 43.599634],
+            zoom: 12
+        });
+        // Add zoom and rotation controls to the map.
+        map.addControl(new mapboxgl.NavigationControl());
+        // Add geolocate control to the map.
+        map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+        enableHighAccuracy: true
+        },
+        trackUserLocation: true
+        }));
+
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+        for(i=0;i<coll.length;i++){
+            coll[i].addEventListener("click",
+            function(){
+                var content = this.nextElementSibling;
+                if (content.style.display === "block"){
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
